@@ -90,7 +90,7 @@ const NewComplaint = () => {
                 className={`gov-select mt-1 ${errors.category ? 'error border-red-400' : ''}`}>
                 <option value="">-- Select Category --</option>
                 {CATEGORIES.map(c => (
-                  <option key={c.value} value={c.value}>{c.icon} {c.label}</option>
+                  <option key={c.value} value={c.value}>{c.label}</option>
                 ))}
               </select>
               {errors.category && <p className="text-red-500 text-xs mt-1">{errors.category}</p>}

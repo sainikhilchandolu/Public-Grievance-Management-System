@@ -4,7 +4,7 @@ import { getComplaints, deleteComplaint } from '../../services/complaintService'
 import DashboardLayout from '../../layouts/DashboardLayout';
 import StatusBadge from '../../components/complaints/StatusBadge';
 import { formatDate, copyToClipboard } from '../../utils/formatters';
-import { STATUSES, CATEGORIES, DEPT_ICONS } from '../../utils/constants';
+import { CATEGORIES } from '../../utils/constants';
 import toast from 'react-hot-toast';
 
 const FILTER_STATUSES = ['All', 'Submitted', 'Under Review', 'Assigned', 'In Progress', 'Resolved', 'Closed', 'Rejected'];
@@ -55,7 +55,7 @@ const MyComplaints = () => {
         <div className="flex flex-col sm:flex-row gap-3">
           <input
             type="text" value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-            placeholder="🔍 Search by title, location or Tracking ID..."
+            placeholder="Search by title, location or Tracking ID..."
             className="gov-input flex-1"
           />
           <select value={status} onChange={(e) => { setStatus(e.target.value); setPage(1); }} className="gov-select sm:w-48">
@@ -64,7 +64,7 @@ const MyComplaints = () => {
           </select>
           <select value={category} onChange={(e) => { setCategory(e.target.value); setPage(1); }} className="gov-select sm:w-48">
             <option value="">All Categories</option>
-            {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.icon} {c.label}</option>)}
+            {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
           </select>
         </div>
       </div>
@@ -77,7 +77,7 @@ const MyComplaints = () => {
             {status ? ` · ${status}` : ''}
           </h3>
           <button onClick={() => navigate('/dashboard/citizen/complaints/new')} className="btn-saffron text-xs px-3 py-2">
-            ✍️ New Complaint
+            New Complaint
           </button>
         </div>
 
@@ -85,7 +85,6 @@ const MyComplaints = () => {
           <div className="p-10 text-center"><span className="spinner spinner-navy w-8 h-8 inline-block" /></div>
         ) : complaints.length === 0 ? (
           <div className="p-10 text-center">
-            <div className="text-4xl mb-3">📭</div>
             <p className="text-gray-500">No complaints found.</p>
           </div>
         ) : (
@@ -113,8 +112,8 @@ const MyComplaints = () => {
                         {c.trackingId && (
                           <button
                             onClick={() => { copyToClipboard(c.trackingId); toast.success('Copied!'); }}
-                            className="text-gray-300 hover:text-navy-500 text-xs" title="Copy"
-                          >📋</button>
+                              className="text-navy-700 hover:text-navy-900 text-xs font-semibold uppercase tracking-wide" title="Copy"
+                            >Copy</button>
                         )}
                       </div>
                     </td>
@@ -123,7 +122,7 @@ const MyComplaints = () => {
                       <p className="text-xs text-gray-400 truncate">{c.location}</p>
                     </td>
                     <td className="whitespace-nowrap text-sm text-gray-600">
-                      {DEPT_ICONS[c.category || c.department] || '📋'} {c.category || c.department}
+                      {c.category || c.department}
                     </td>
                     <td>
                       <span className={`status-badge priority-${c.priority?.toLowerCase() || 'medium'}`}>
@@ -150,9 +149,9 @@ const MyComplaints = () => {
         {/* Pagination */}
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-2 p-4 border-t border-gray-100">
-            <button onClick={() => setPage(p => Math.max(1, p-1))} disabled={page <= 1} className="btn-outline px-3 py-1.5 text-sm disabled:opacity-40">← Prev</button>
+            <button onClick={() => setPage(p => Math.max(1, p-1))} disabled={page <= 1} className="btn-outline px-3 py-1.5 text-sm disabled:opacity-40">Prev</button>
             <span className="text-sm text-gray-600 font-medium">Page {page} of {totalPages}</span>
-            <button onClick={() => setPage(p => Math.min(totalPages, p+1))} disabled={page >= totalPages} className="btn-outline px-3 py-1.5 text-sm disabled:opacity-40">Next →</button>
+            <button onClick={() => setPage(p => Math.min(totalPages, p+1))} disabled={page >= totalPages} className="btn-outline px-3 py-1.5 text-sm disabled:opacity-40">Next</button>
           </div>
         )}
       </div>

@@ -6,17 +6,12 @@ import DashboardCards from '../../components/dashboard/DashboardCards';
 import ComplaintTable from '../../components/dashboard/ComplaintTable';
 import EmptyState from '../../components/ui/EmptyState';
 import toast from 'react-hot-toast';
-import {
-  HiArrowRight, HiOutlineFilter, HiOutlineDocumentAdd,
-  HiOutlineClipboardList, HiOutlineChartBar
-} from 'react-icons/hi';
 
-const QuickAction = ({ icon, label, onClick }) => (
+const QuickAction = ({ label, onClick }) => (
   <button
     onClick={onClick}
-    className="flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-[#0B2E59] border border-slate-200 bg-white hover:bg-slate-50 hover:border-[#163E72] rounded-xl transition-all shadow-sm"
+    className="px-4 py-2.5 text-xs font-bold text-[#0B2E59] border border-slate-200 bg-white hover:bg-slate-50 hover:border-[#163E72] rounded-xl transition-all shadow-sm"
   >
-    {icon}
     {label}
   </button>
 );
@@ -101,17 +96,14 @@ const AdminDashboard = () => {
         <h3 className="text-xs font-bold text-[#0B2E59] uppercase tracking-wider mb-3">Quick Actions</h3>
         <div className="flex flex-wrap gap-2">
           <QuickAction
-            icon={<HiOutlineClipboardList className="w-4 h-4" />}
             label="View All Complaints"
             onClick={() => navigate('/dashboard/admin/complaints')}
           />
           <QuickAction
-            icon={<HiOutlineChartBar className="w-4 h-4" />}
             label="Open Analytics"
             onClick={() => navigate('/dashboard/admin/analytics')}
           />
           <QuickAction
-            icon={<HiOutlineDocumentAdd className="w-4 h-4" />}
             label="Manage Users"
             onClick={() => navigate('/dashboard/admin/users')}
           />
@@ -121,8 +113,7 @@ const AdminDashboard = () => {
       {/* Recent Complaints Table */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-          <div className="flex items-center gap-2">
-            <HiOutlineFilter className="w-4 h-4 text-[#163E72]" />
+          <div>
             <h3 className="text-sm font-bold text-[#0B2E59]">
               {activeFilter === 'All' ? 'Recent Complaints' : `${activeFilter} Complaints`}
             </h3>
@@ -133,9 +124,9 @@ const AdminDashboard = () => {
                 state: { filterStatus: activeFilter === 'All' ? '' : activeFilter }
               })
             }
-            className="flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors"
+            className="text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors"
           >
-            View All <HiArrowRight className="w-3.5 h-3.5" />
+            View All
           </button>
         </div>
 

@@ -8,7 +8,7 @@ import StatusUpdateModal from '../../components/modals/StatusUpdateModal';
 import ConfirmModal from '../../components/modals/ConfirmModal';
 import Spinner from '../../components/ui/Spinner';
 import { formatDate } from '../../utils/formatters';
-import { PRIORITY_COLORS, DEPT_ICONS } from '../../utils/constants';
+import { PRIORITY_COLORS } from '../../utils/constants';
 import toast from 'react-hot-toast';
 import { HiArrowLeft, HiLocationMarker, HiUser, HiMail, HiCalendar, HiTrash } from 'react-icons/hi';
 
@@ -55,7 +55,6 @@ const ComplaintDetailAdmin = () => {
   if (!complaint) return null;
 
   const priority = PRIORITY_COLORS[complaint.priority] || PRIORITY_COLORS.Medium;
-  const deptIcon = DEPT_ICONS[complaint.department] || '📋';
 
   return (
     <AdminLayout pageTitle="Complaint Details">
@@ -95,7 +94,7 @@ const ComplaintDetailAdmin = () => {
             
             <div className="flex flex-wrap items-center gap-3 mb-6">
               <span className="inline-flex items-center gap-1 text-sm font-medium bg-gray-100 text-gray-700 px-3 py-1.5 rounded-xl">
-                <span>{deptIcon}</span> {complaint.department}
+                {complaint.department}
               </span>
               <span className={`text-sm font-semibold px-3 py-1.5 rounded-xl ${priority.bg} ${priority.text}`}>
                 {complaint.priority} Priority

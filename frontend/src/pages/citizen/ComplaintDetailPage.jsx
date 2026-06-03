@@ -5,7 +5,7 @@ import DashboardLayout from '../../layouts/DashboardLayout';
 import StatusBadge from '../../components/complaints/StatusBadge';
 import StatusTimeline from '../../components/complaints/StatusTimeline';
 import { formatDateTime, formatDate, copyToClipboard } from '../../utils/formatters';
-import { DEPT_ICONS, PRIORITY_CLASS, API_BASE } from '../../utils/constants';
+import { PRIORITY_CLASS, API_BASE } from '../../utils/constants';
 import toast from 'react-hot-toast';
 
 const ComplaintDetailPage = () => {
@@ -93,7 +93,6 @@ const ComplaintDetailPage = () => {
                 <div>
                   <h3 className="text-xl font-bold text-navy-800">{complaint.title}</h3>
                   <p className="text-sm text-gray-500 mt-1">
-                    {DEPT_ICONS[complaint.category || complaint.department] || '📋'}{' '}
                     {complaint.category || complaint.department} · 📍 {complaint.location}
                   </p>
                 </div>

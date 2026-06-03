@@ -1,8 +1,6 @@
-import { HiClipboardList, HiClock, HiRefresh, HiCheckCircle, HiXCircle, HiUsers } from 'react-icons/hi';
-
 /**
  * DashboardCards Component
- * Displays summary stat cards for the admin dashboard. Now fully interactive!
+ * Displays summary stat cards for the admin dashboard with a formal government portal style.
  */
 const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
   const cards = [
@@ -10,27 +8,23 @@ const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
       id: 'All',
       label: 'Total Complaints',
       value: stats?.total ?? 0,
-      icon: <HiClipboardList size={26} />,
       colorTheme: 'blue',
       desc: 'All time records',
     },
     {
       id: 'Pending',
       label: 'Pending',
-      // New complaints use 'Submitted'; sum both for complete count
       value: (stats?.byStatus?.Submitted ?? 0) + (stats?.byStatus?.Pending ?? 0),
-      icon: <HiClock size={26} />,
       colorTheme: 'yellow',
       desc: 'Awaiting review',
     },
     {
       id: 'In Progress',
       label: 'In Progress',
-      // Combines Under Review + Assigned + In Progress for a meaningful aggregate
-      value: (stats?.byStatus?.['In Progress'] ?? 0)
-            + (stats?.byStatus?.['Under Review'] ?? 0)
-            + (stats?.byStatus?.Assigned ?? 0),
-      icon: <HiRefresh size={26} />,
+      value:
+        (stats?.byStatus?.['In Progress'] ?? 0) +
+        (stats?.byStatus?.['Under Review'] ?? 0) +
+        (stats?.byStatus?.Assigned ?? 0),
       colorTheme: 'purple',
       desc: 'Being worked on',
     },
@@ -38,7 +32,6 @@ const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
       id: 'Resolved',
       label: 'Resolved',
       value: stats?.byStatus?.Resolved ?? 0,
-      icon: <HiCheckCircle size={26} />,
       colorTheme: 'green',
       desc: 'Successfully closed',
     },
@@ -46,7 +39,6 @@ const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
       id: 'Rejected',
       label: 'Rejected',
       value: stats?.byStatus?.Rejected ?? 0,
-      icon: <HiXCircle size={26} />,
       colorTheme: 'red',
       desc: 'Not accepted',
     },
@@ -54,7 +46,6 @@ const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
       id: 'Citizens',
       label: 'Citizens',
       value: stats?.totalUsers ?? 0,
-      icon: <HiUsers size={26} />,
       colorTheme: 'indigo',
       desc: 'Registered users',
       isNonFilterable: true,
@@ -105,24 +96,22 @@ const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
       {cards.map((card) => {
         const isActive = activeFilter === card.id;
         const isClickable = !card.isNonFilterable;
-        
         return (
           <div
             key={card.label}
             onClick={() => isClickable && onCardClick(card.id)}
             className={`
-              relative bg-white rounded-xl border border-slate-200 p-5 
+              relative bg-white rounded-xl border border-slate-200 p-5
               transition-all duration-300 group
               ${isClickable ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1' : ''}
               ${getThemeClasses(card.colorTheme, isActive)}
             `}
           >
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-all duration-300 ${getIconClasses(card.colorTheme, isActive)}`}>
-              {card.icon}
+            <div className="mb-4">
+              <p className="text-4xl font-black text-gray-800">{card.value}</p>
             </div>
-            <p className="text-3xl font-black text-gray-800 mb-1">{card.value}</p>
-            <p className="text-sm font-bold text-gray-700 leading-tight mb-1">{card.label}</p>
-            <p className="text-xs text-gray-400">{card.desc}</p>
+            <p className="text-sm font-bold text-[#0B2E59] leading-tight mb-1">{card.label}</p>
+            <p className="text-xs text-slate-500">{card.desc}</p>
           </div>
         );
       })}

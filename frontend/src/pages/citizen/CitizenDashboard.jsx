@@ -1,22 +1,21 @@
 import { useState, useEffect } from 'react';
+import { FiCopy } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { getComplaints } from '../../services/complaintService';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import StatusBadge from '../../components/complaints/StatusBadge';
 import { formatDate, copyToClipboard } from '../../utils/formatters';
-import { DEPT_ICONS } from '../../utils/constants';
 import toast from 'react-hot-toast';
-import { FiFileText, FiClock, FiCheckCircle, FiTrendingUp, FiSearch, FiCopy, FiInbox, FiPlus } from 'react-icons/fi';
 
-const StatCard = ({ label, value, icon, color, active, onClick }) => (
-  <button onClick={onClick} className={`stat-card ${color} text-left w-full ${active ? 'active' : ''} bg-white border border-slate-200 p-5 rounded-xl transition-all shadow-sm flex items-center justify-between`}>
+const StatCard = ({ label, value, active, onClick }) => (
+  <button
+    onClick={onClick}
+    className={`stat-card text-left w-full ${active ? 'ring-1 ring-[#163E72] shadow-lg' : 'hover:shadow-md'} bg-white border border-slate-200 p-5 rounded-xl transition-all`}
+  >
     <div className="space-y-1">
       <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">{label}</p>
       <p className="text-2xl font-black text-[#0B2E59]">{value}</p>
-    </div>
-    <div className="p-3 bg-slate-50 rounded-xl text-[#163E72] border border-slate-100">
-      {icon}
     </div>
   </button>
 );
@@ -65,20 +64,20 @@ const CitizenDashboard = () => {
         <div>
           <h2 className="text-lg font-bold text-[#0B2E59]">Welcome back, {user?.name}</h2>
           <p className="text-slate-500 text-xs mt-0.5">
-            CPGRAMS Portal: Lodge and track your grievances directly.
+            CPGRAMS Portal: Lodge and track grievances with government services.
           </p>
         </div>
-        <Link to="/dashboard/citizen/complaints/new" className="bg-[#163E72] hover:bg-[#0B2E59] text-white px-4 py-2 rounded-lg font-bold transition-all border border-[#2b67ad] text-xs flex items-center gap-1.5 w-max">
-          <FiPlus className="w-4 h-4" /> File New Grievance
+        <Link to="/dashboard/citizen/complaints/new" className="bg-[#163E72] hover:bg-[#0B2E59] text-white px-4 py-2 rounded-lg font-bold transition-all border border-[#2b67ad] text-xs w-max">
+          File New Grievance
         </Link>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <StatCard label="Total Grievances" value={stats.total}     icon={<FiFileText className="w-5 h-5" />} color="navy"    active={activeFilter==='All'}        onClick={() => setActiveFilter('All')} />
-        <StatCard label="Pending Review"   value={stats.pending}   icon={<FiClock className="w-5 h-5" />} color="saffron" active={activeFilter==='Submitted'}   onClick={() => setActiveFilter('Submitted')} />
-        <StatCard label="In Progress"      value={stats.inProgress} icon={<FiTrendingUp className="w-5 h-5" />} color="purple" active={activeFilter==='In Progress'} onClick={() => setActiveFilter('In Progress')} />
-        <StatCard label="Resolved"         value={stats.resolved}  icon={<FiCheckCircle className="w-5 h-5" />} color="green"   active={activeFilter==='Resolved'}   onClick={() => setActiveFilter('Resolved')} />
+        <StatCard label="Total Grievances" value={stats.total} active={activeFilter==='All'} onClick={() => setActiveFilter('All')} />
+        <StatCard label="Pending Review" value={stats.pending} active={activeFilter==='Submitted'} onClick={() => setActiveFilter('Submitted')} />
+        <StatCard label="In Progress" value={stats.inProgress} active={activeFilter==='In Progress'} onClick={() => setActiveFilter('In Progress')} />
+        <StatCard label="Resolved" value={stats.resolved} active={activeFilter==='Resolved'} onClick={() => setActiveFilter('Resolved')} />
       </div>
 
       {/* Complaints section */}
@@ -99,7 +98,6 @@ const CitizenDashboard = () => {
           </div>
         ) : complaints.length === 0 ? (
           <div className="p-10 text-center bg-white">
-            <FiInbox className="w-8 h-8 text-slate-300 mx-auto mb-2" />
             <p className="text-slate-500 text-xs font-bold">No active grievances found.</p>
             <Link to="/dashboard/citizen/complaints/new" className="bg-[#163E72] hover:bg-[#0B2E59] text-white px-4 py-2 rounded-lg font-bold text-xs inline-flex mt-4 transition-all">
               File Your First Grievance
@@ -156,10 +154,10 @@ const CitizenDashboard = () => {
 
       {/* Quick track box */}
       <div className="mt-6 bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-        <h4 className="font-bold text-sm text-[#0B2E59] uppercase tracking-wider mb-1 flex items-center gap-2">
-          <FiSearch className="w-4 h-4 text-[#163E72]" /> Quick Status Lookup
+        <h4 className="font-bold text-sm text-[#0B2E59] uppercase tracking-wider mb-1">
+          Quick Status Lookup
         </h4>
-        <p className="text-xs text-slate-450 mb-4">Input a tracking registration code to view progress directly.</p>
+        <p className="text-xs text-slate-500 mb-4">Input a tracking registration code to view progress directly.</p>
         <div className="flex gap-3">
           <input id="quickTrack" placeholder="GRV-YYYYMMDD-XXXX" className="w-full px-4 py-2 border border-slate-250 rounded-lg text-xs font-mono text-slate-800 placeholder-slate-400 bg-white transition-all duration-200 focus:border-[#0B2E59] focus:outline-none" style={{ letterSpacing: '0.04em' }} />
           <button

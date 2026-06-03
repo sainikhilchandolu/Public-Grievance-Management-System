@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiPhone, FiMail, FiCheckCircle, FiClock, FiFileText, FiShield, FiSliders, FiUsers, FiTrendingUp } from 'react-icons/fi';
+import { FiPhone, FiMail, FiCheckCircle, FiClock, FiShield, FiSliders } from 'react-icons/fi';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -14,18 +14,17 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen flex flex-col bg-[#F5F7FA] font-sans text-[#1F2937]">
       {/* 1. Government Top Stripe & Header */}
-      <div className="bg-[#0B2E59] text-slate-300 text-[10px] sm:text-xs py-1.5 px-4 flex justify-between items-center font-medium border-b border-white/5 select-none">
-        <div className="flex items-center gap-1.5">
-          <span className="text-xs">🇮🇳</span>
-          <span>भारत सरकार | GOVERNMENT OF INDIA</span>
+      <div className="bg-[#0B2E59] text-slate-200 text-[10px] sm:text-xs py-2 px-4 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0 font-medium border-b border-white/10 select-none">
+        <div className="flex flex-wrap items-center gap-3">
+          <span>{currentDate}</span>
+          <span className="hidden sm:inline text-slate-400">|</span>
+          <span className="text-slate-100 font-semibold">Help Desk: 1800-123-4567</span>
+          <span className="hidden md:inline text-slate-400">|</span>
+          <span className="text-slate-100">Email: support@pgms.gov.in</span>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="hidden md:inline text-slate-300 font-semibold">{currentDate}</span>
-          <span className="hidden md:inline text-slate-600">|</span>
-          <div className="flex gap-2.5">
-            <span className="text-white font-bold hover:underline cursor-pointer">English</span>
-            <span className="hover:text-white cursor-pointer transition-colors">हिन्दी</span>
-          </div>
+        <div className="flex items-center gap-5 text-white text-[11px] font-semibold">
+          <a href="#footer" className="hover:text-slate-100 underline decoration-white/50">Accessibility</a>
+          <a href="#footer" className="hover:text-slate-100 underline decoration-white/50">Contact</a>
         </div>
       </div>
 
@@ -37,38 +36,20 @@ const LandingPage = () => {
       </div>
 
       {/* Top Banner Branding Header */}
-      <header className="bg-white border-b border-slate-200 py-4 px-4 sm:px-6 md:px-8 shadow-sm">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-4">
-            <div className="text-4xl bg-slate-50 p-2.5 rounded-2xl border border-slate-200 shadow-inner select-none">
-              🏛️
+      <header className="bg-white border-b border-slate-200 py-5 px-4 sm:px-6 md:px-8 shadow-sm">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-center gap-6">
+          <div className="flex items-start gap-4">
+            <div className="w-14 h-14 rounded-3xl border border-slate-200 bg-slate-50 grid place-items-center text-[13px] font-black text-slate-800 uppercase tracking-[0.18em]">
+              GOI
             </div>
             <div>
-              <h1 className="text-2xl font-black text-[#0B2E59] tracking-tight leading-none flex flex-col sm:flex-row sm:items-center gap-1">
-                <span>CPGRAMS PORTAL</span>
-                <span className="text-xs font-bold bg-blue-150 text-blue-800 px-2 py-0.5 rounded-full border border-blue-200 w-max sm:inline-block">OFFICIAL</span>
-              </h1>
-              <p className="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-1">
-                Centralized Public Grievance Redress and Monitoring System • लोक शिकायत मंच
-              </p>
+              <p className="text-[11px] uppercase tracking-[0.3em] text-slate-500">Government of India</p>
+              <h1 className="text-2xl sm:text-2xl font-semibold text-[#0B2E59] leading-tight">Department of Administrative Reforms and Public Grievances</h1>
+              <p className="text-xs sm:text-sm text-slate-500 mt-2">Public Grievance Management System — Citizen services portal for submission, tracking and redressal</p>
             </div>
           </div>
-
-          <div className="flex items-center gap-6 text-xs font-semibold text-slate-600">
-            <div className="flex items-center gap-2">
-              <FiPhone className="text-[#163E72] text-base" />
-              <div>
-                <p className="text-[10px] text-slate-400 leading-none">HELPDESK TOLL FREE</p>
-                <p className="text-slate-800 font-bold">1800-11-0707</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <FiMail className="text-[#163E72] text-base" />
-              <div>
-                <p className="text-[10px] text-slate-400 leading-none">SUPPORT EMAIL</p>
-                <p className="text-slate-800 font-bold">pgportal@nic.in</p>
-              </div>
-            </div>
+          <div className="rounded-full bg-slate-100 px-5 py-3 border border-slate-200 text-slate-700 text-xs font-semibold uppercase tracking-[0.24em]">
+            Citizen first service platform
           </div>
         </div>
       </header>
@@ -77,56 +58,69 @@ const LandingPage = () => {
       <section className="bg-gradient-to-br from-[#0B2E59] via-[#0D2440] to-[#163E72] text-white relative overflow-hidden py-16 sm:py-24 px-4 sm:px-6 md:px-8 border-b-4 border-[#163E72]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.08),transparent_50%)] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch relative z-10">
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/10 text-xs font-semibold tracking-wide text-blue-200">
-              🇮🇳 Digital India Initiative
+              GOI • Digital India Initiative
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
-              Direct Channel for Public Grievance Redressal
+              Public Grievance Management System
             </h2>
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl">
               An online platform for citizens of India to lodge grievances with Central Ministries, State Governments, and Departments. Submit issues, track real-time resolution progress, and access public assistance services.
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
-              <Link to="/dashboard/citizen/complaints/new" className="bg-[#163E72] hover:bg-[#0B2E59] text-white px-6 py-3 rounded-xl font-bold transition-all border border-[#2b67ad] shadow-lg hover:-translate-y-0.5 active:translate-y-0 text-sm">
-                ✍️ Lodge a Grievance
+              <button onClick={() => navigate('/login')} className="bg-white text-[#0B2E59] px-6 py-3 rounded-full font-bold transition-all hover:bg-slate-100 border border-white/30 text-sm shadow-sm">
+                Lodge Complaint
+              </button>
+              <Link to="/track" className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-3 rounded-full font-bold transition-all text-sm">
+                Track Complaint
               </Link>
-              <Link to="/track" className="bg-white/15 hover:bg-white/20 border border-white/20 text-white px-6 py-3 rounded-xl font-bold transition-all hover:-translate-y-0.5 active:translate-y-0 text-sm">
-                🔍 Track Grievance Status
-              </Link>
+              <button onClick={() => navigate('/login')} className="bg-transparent hover:bg-white/10 border border-white/20 text-white px-6 py-3 rounded-full font-bold transition-all text-sm">
+                Login
+              </button>
+            </div>
+            <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="rounded-3xl bg-slate-900/80 border border-slate-700 p-6 text-center shadow-lg">
+                <p className="text-[10px] uppercase tracking-[0.35em] text-slate-400 mb-3">Total Complaints</p>
+                <p className="text-3xl font-black text-white">12K+</p>
+              </div>
+              <div className="rounded-3xl bg-slate-900/80 border border-slate-700 p-6 text-center shadow-lg">
+                <p className="text-[10px] uppercase tracking-[0.35em] text-slate-400 mb-3">Resolved Cases</p>
+                <p className="text-3xl font-black text-emerald-300">95%</p>
+              </div>
+              <div className="rounded-3xl bg-slate-900/80 border border-slate-700 p-6 text-center shadow-lg">
+                <p className="text-[10px] uppercase tracking-[0.35em] text-slate-400 mb-3">Departments</p>
+                <p className="text-3xl font-black text-orange-300">40+</p>
+              </div>
             </div>
           </div>
 
-          <div className="lg:col-span-5 bg-white/5 backdrop-blur-md border border-white/10 p-6 sm:p-8 rounded-3xl shadow-2xl space-y-6">
-            <h3 className="text-xl font-bold text-white border-b border-white/10 pb-3 flex items-center gap-2">
-              <span>🏛️</span> Entry Portal • प्रवेश द्वार
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-white/10 hover:bg-white/15 p-5 rounded-2xl border border-white/5 transition-all text-center">
-                <div className="text-3xl mb-2">👤</div>
-                <h4 className="font-bold text-sm text-white">Citizen Corner</h4>
-                <p className="text-[10px] text-slate-300 mt-1">Submit & view your personal complaints</p>
-                <button onClick={() => navigate('/login')} className="w-full bg-[#163E72] hover:bg-[#0b2e59] border border-blue-500 text-white font-bold text-xs py-2 rounded-lg mt-4 transition-colors">
-                  Citizen Access
-                </button>
-              </div>
-              <div className="bg-white/10 hover:bg-white/15 p-5 rounded-2xl border border-white/5 transition-all text-center">
-                <div className="text-3xl mb-2">👮</div>
-                <h4 className="font-bold text-sm text-white">Officer Corner</h4>
-                <p className="text-[10px] text-slate-300 mt-1">Access administration & review panel</p>
-                <button onClick={() => navigate('/login')} className="w-full bg-[#0B2E59] hover:bg-[#072347] border border-blue-700 text-white font-bold text-xs py-2 rounded-lg mt-4 transition-colors">
-                  Officer Access
-                </button>
-              </div>
+          <div className="lg:col-span-5 rounded-[32px] bg-white p-8 shadow-2xl border border-slate-200 text-slate-900 h-full flex flex-col justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500 mb-4">Project data</p>
             </div>
-            <div className="text-center pt-2">
-              <p className="text-xs text-slate-300 font-semibold">
-                New user? <Link to="/register" className="text-blue-300 hover:underline">Register on the portal</Link>
-              </p>
+            <h3 className="text-3xl font-black text-slate-900 mb-4">A modern grievance redressal platform</h3>
+            <p className="text-sm leading-relaxed text-slate-600 mb-8">
+              Built for nationwide citizen service, this portal connects residents with government departments through a secure, transparent and accountable digital workflow.
+            </p>
+            <div className="grid gap-4 flex-1">
+              <div className="rounded-3xl bg-slate-50 border border-slate-200 p-5">
+                <p className="text-sm font-semibold text-slate-900">4,87,321 grievances lodged</p>
+                <p className="text-xs text-slate-500 mt-1">Since launch, citizens have submitted issues across public services.</p>
+              </div>
+              <div className="rounded-3xl bg-slate-50 border border-slate-200 p-5">
+                <p className="text-sm font-semibold text-slate-900">4,62,190 cases resolved</p>
+                <p className="text-xs text-slate-500 mt-1">Resolution metrics are updated in real time for transparency.</p>
+              </div>
+              <div className="rounded-3xl bg-slate-50 border border-slate-200 p-5">
+                <p className="text-sm font-semibold text-slate-900">Integrated with 18 departments</p>
+                <p className="text-xs text-slate-500 mt-1">Dashboard and workflows unify ministry and state department actions.</p>
+              </div>
             </div>
           </div>
         </div>
+
       </section>
 
       {/* 3. Statistics Section */}
@@ -138,27 +132,22 @@ const LandingPage = () => {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
             <div className="bg-[#f8fafc] border border-slate-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all">
-              <FiFileText className="text-[#0B2E59] text-2xl mx-auto mb-3" />
               <p className="text-2xl font-black text-slate-800">4,87,321</p>
               <p className="text-xs text-slate-500 font-semibold mt-1">Grievances Filed</p>
             </div>
             <div className="bg-[#f0fdf4] border border-green-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all">
-              <FiCheckCircle className="text-green-600 text-2xl mx-auto mb-3" />
               <p className="text-2xl font-black text-green-700">4,62,190</p>
               <p className="text-xs text-green-600 font-semibold mt-1">Resolved Successfully</p>
             </div>
-            <div className="bg-[#fffbeb] border border-amber-250 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all">
-              <FiClock className="text-amber-600 text-2xl mx-auto mb-3" />
+            <div className="bg-[#fffbeb] border border-amber-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all">
               <p className="text-2xl font-black text-amber-700">25,131</p>
               <p className="text-xs text-amber-600 font-semibold mt-1">Under Redressal</p>
             </div>
             <div className="bg-[#eff6ff] border border-blue-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all">
-              <FiShield className="text-blue-600 text-2xl mx-auto mb-3" />
               <p className="text-2xl font-black text-blue-700">18</p>
               <p className="text-xs text-blue-500 font-semibold mt-1">Covered Departments</p>
             </div>
             <div className="bg-[#faf5ff] border border-purple-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all col-span-2 md:col-span-1">
-              <FiUsers className="text-purple-600 text-2xl mx-auto mb-3" />
               <p className="text-2xl font-black text-purple-700">1.2 Lakh+</p>
               <p className="text-xs text-purple-500 font-semibold mt-1">Active Citizens</p>
             </div>
@@ -177,45 +166,36 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white rounded-3xl p-6 border border-slate-200 hover:border-[#163E72] shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-xl mb-4 border border-blue-100">
-                  📝
-                </div>
                 <h4 className="text-lg font-bold text-slate-800">Lodge Complaint</h4>
                 <p className="text-xs text-slate-500 mt-2 leading-relaxed">
                   File complaints related to public utilities including water, sanitation, road maintenance, and electricity grid outages.
                 </p>
               </div>
-              <Link to="/login" className="text-xs font-bold text-[#163E72] hover:text-[#0B2E59] flex items-center gap-1 mt-6">
+              <Link to="/login" className="text-xs font-bold text-[#163E72] hover:text-[#0B2E59] mt-6 inline-block">
                 Access Form →
               </Link>
             </div>
 
             <div className="bg-white rounded-3xl p-6 border border-slate-200 hover:border-[#163E72] shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-xl mb-4 border border-blue-100">
-                  🔎
-                </div>
                 <h4 className="text-lg font-bold text-slate-800">Track Complaint</h4>
                 <p className="text-xs text-slate-500 mt-2 leading-relaxed">
                   Verify complaint processing using your unique `GRV-YYYYMMDD-XXXX` ID. Instant lookup is fully accessible without logins.
                 </p>
               </div>
-              <Link to="/track" className="text-xs font-bold text-[#163E72] hover:text-[#0B2E59] flex items-center gap-1 mt-6">
+              <Link to="/track" className="text-xs font-bold text-[#163E72] hover:text-[#0B2E59] mt-6 inline-block">
                 Track Status →
               </Link>
             </div>
 
             <div className="bg-white rounded-3xl p-6 border border-slate-200 hover:border-[#163E72] shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center text-xl mb-4 border border-blue-100">
-                  📊
-                </div>
                 <h4 className="text-lg font-bold text-slate-800">Citizen Dashboard</h4>
                 <p className="text-xs text-slate-500 mt-2 leading-relaxed">
                   Register to view interactive statistics grids, track history records, and manage profiles directly.
                 </p>
               </div>
-              <Link to="/login" className="text-xs font-bold text-[#163E72] hover:text-[#0B2E59] flex items-center gap-1 mt-6">
+              <Link to="/login" className="text-xs font-bold text-[#163E72] hover:text-[#0B2E59] mt-6 inline-block">
                 Open Dashboard →
               </Link>
             </div>

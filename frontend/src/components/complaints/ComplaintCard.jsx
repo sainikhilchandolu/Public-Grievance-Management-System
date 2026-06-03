@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import StatusBadge from './StatusBadge';
 import { formatDate, truncate } from '../../utils/formatters';
-import { PRIORITY_COLORS, DEPT_ICONS } from '../../utils/constants';
+import { PRIORITY_COLORS } from '../../utils/constants';
 import { HiLocationMarker, HiTrash, HiEye } from 'react-icons/hi';
 
 /**
@@ -11,7 +11,6 @@ import { HiLocationMarker, HiTrash, HiEye } from 'react-icons/hi';
 const ComplaintCard = ({ complaint, onDelete, role = 'citizen' }) => {
   const navigate = useNavigate();
   const priority = PRIORITY_COLORS[complaint.priority] || PRIORITY_COLORS.Medium;
-  const deptIcon = DEPT_ICONS[complaint.department] || '📋';
   const basePath = role === 'admin' ? '/dashboard/admin' : '/dashboard/citizen';
 
   const handleView = () => navigate(`${basePath}/complaints/${complaint._id}`);
@@ -47,7 +46,7 @@ const ComplaintCard = ({ complaint, onDelete, role = 'citizen' }) => {
       {/* Tags Row */}
       <div className="flex flex-wrap gap-2 mb-6">
         <span className="inline-flex items-center gap-1.5 text-xs font-bold bg-gray-50 text-gray-600 px-3 py-1.5 rounded-xl border border-gray-100">
-          <span>{deptIcon}</span> {complaint.department}
+          {complaint.department}
         </span>
         <span className={`text-xs font-bold px-3 py-1.5 rounded-xl ${priority.bg} ${priority.text}`}>
           {complaint.priority} Priority

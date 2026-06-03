@@ -1,14 +1,14 @@
-// Complaint categories with icons
+// Complaint categories
 export const CATEGORIES = [
-  { value: 'Roads',          label: 'Roads & Infrastructure', icon: '🛣️' },
-  { value: 'Water Supply',   label: 'Water Supply',           icon: '💧' },
-  { value: 'Electricity',    label: 'Electricity',            icon: '⚡' },
-  { value: 'Sanitation',     label: 'Sanitation & Drainage',  icon: '🧹' },
-  { value: 'Transport',      label: 'Transport',              icon: '🚌' },
-  { value: 'Public Safety',  label: 'Public Safety',          icon: '🛡️' },
-  { value: 'Healthcare',     label: 'Healthcare',             icon: '🏥' },
-  { value: 'Education',      label: 'Education',              icon: '📚' },
-  { value: 'Other',          label: 'Other',                  icon: '📋' },
+  { value: 'Roads',          label: 'Roads & Infrastructure' },
+  { value: 'Water Supply',   label: 'Water Supply' },
+  { value: 'Electricity',    label: 'Electricity' },
+  { value: 'Sanitation',     label: 'Sanitation & Drainage' },
+  { value: 'Transport',      label: 'Transport' },
+  { value: 'Public Safety',  label: 'Public Safety' },
+  { value: 'Healthcare',     label: 'Healthcare' },
+  { value: 'Education',      label: 'Education' },
+  { value: 'Other',          label: 'Other' },
 ];
 
 // Alias for backward compat
@@ -60,8 +60,6 @@ export const PRIORITY_COLORS = {
   High:   { text: 'text-orange-700', bg: 'bg-orange-50' },
   Urgent: { text: 'text-red-700',    bg: 'bg-red-50'    },
 };
-
-export const DEPT_ICONS = Object.fromEntries(CATEGORIES.map(c => [c.value, c.icon]));
 
 export const CHART_COLORS = [
   '#1e4799','#f97316','#15803d','#b91c1c',

@@ -4,7 +4,7 @@ import { trackComplaint } from '../../services/complaintService';
 import StatusBadge from '../../components/complaints/StatusBadge';
 import StatusTimeline from '../../components/complaints/StatusTimeline';
 import { formatDateTime, formatDate } from '../../utils/formatters';
-import { DEPT_ICONS, API_BASE } from '../../utils/constants';
+import { API_BASE } from '../../utils/constants';
 
 // Validate Tracking ID format: GRV-YYYYMMDD-XXXX and calendar correctness
 const validateTrackingId = (id) => {
@@ -169,7 +169,6 @@ const TrackComplaintPage = () => {
       <main className="max-w-3xl mx-auto px-4 py-10">
         {/* Search box */}
         <div className="text-center mb-10 animate-fade-in">
-          <div className="text-5xl mb-4">🔍</div>
           <h2 className="text-2xl sm:text-3xl font-black text-navy-800 mb-2">Track Your Complaint</h2>
           <p className="text-gray-500 text-sm sm:text-base">
             Enter your Tracking ID to get real-time status updates on your grievance.
@@ -186,7 +185,7 @@ const TrackComplaintPage = () => {
               style={{ letterSpacing: '0.04em' }}
             />
             <button type="submit" disabled={loading} className="btn-primary px-6 flex-shrink-0">
-              {loading ? <span className="spinner w-4 h-4" /> : '🔍 Track'}
+              {loading ? <span className="spinner w-4 h-4" /> : 'Track'}
             </button>
           </div>
           <p className="text-xs text-gray-400 mt-2">
@@ -222,7 +221,7 @@ const TrackComplaintPage = () => {
               <div className="gov-card-body">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <Detail label="Complaint Title" value={complaint.title} />
-                  <Detail label="Category" value={`${DEPT_ICONS[complaint.category] || '📋'} ${complaint.category || complaint.department}`} />
+                  <Detail label="Category" value={complaint.category || complaint.department} />
                   <Detail label="Submission Date & Time" value={formatDateTime(complaint.createdAt)} />
                   <Detail label="Last Updated" value={formatDateTime(complaint.updatedAt)} />
                   <Detail label="Location" value={complaint.location} />

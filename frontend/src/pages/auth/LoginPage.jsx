@@ -245,22 +245,7 @@ const LoginPage = () => {
               </button>
             </form>
 
-            {/* Demo credentials */}
-            <div className="mt-5 bg-slate-50 border border-slate-200 rounded-xl p-4">
-              <p className="text-[10px] font-black text-[#0B2E59] uppercase tracking-widest mb-2">🔑 Demo Accounts</p>
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="bg-white rounded-lg p-2 border border-slate-100">
-                  <p className="font-bold text-[#0B2E59] text-[11px]">Admin</p>
-                  <p className="font-mono text-gray-500 text-[10px]">admin@grievance.gov</p>
-                  <p className="font-mono text-gray-500 text-[10px]">admin123</p>
-                </div>
-                <div className="bg-white rounded-lg p-2 border border-slate-100">
-                  <p className="font-bold text-[#0B2E59] text-[11px]">Citizen</p>
-                  <p className="font-mono text-gray-500 text-[10px]">john@example.com</p>
-                  <p className="font-mono text-gray-500 text-[10px]">user123</p>
-                </div>
-              </div>
-            </div>
+            
 
             {/* Links */}
             <div className="mt-6 text-center space-y-2">
