@@ -19,13 +19,13 @@ const Field = ({ label, name, type = 'text', placeholder, value, onChange, error
           <Icon size={16} />
         </span>
       )}
-      <input
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        autoComplete={type === 'password' ? 'current-password' : 'off'}
+        <input
+          type={type}
+          name={name}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          autoComplete={type === 'password' ? 'new-password' : 'off'}
         className={`
           w-full h-11 ${Icon ? 'pl-10' : 'pl-4'} ${right ? 'pr-11' : 'pr-4'}
           bg-white border rounded-lg text-sm font-medium text-gray-800
@@ -187,7 +187,7 @@ const LoginPage = () => {
             </p>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-1">
+            <form onSubmit={handleSubmit} className="space-y-1" autoComplete="off">
               <Field
                 label="Email"
                 name="email"
