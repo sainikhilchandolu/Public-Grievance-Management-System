@@ -251,22 +251,8 @@ const RegisterPage = () => {
                 icon={FiMail}
               />
 
-              {/* Role Select */}
-              <div className="w-full">
-                <label className="block text-xs font-bold text-[#374151] uppercase tracking-wider mb-1.5">
-                  Register As
-                </label>
-                <select
-                  name="role"
-                  value={form.role}
-                  onChange={handleChange}
-                  className="w-full h-11 px-4 bg-white border border-[#D1D5DB] rounded-lg text-sm font-medium text-gray-800 outline-none transition-all duration-200 focus:border-[#163E72] focus:ring-2 focus:ring-[#163E72]/10 cursor-pointer"
-                >
-                  <option value="citizen">Citizen</option>
-                  <option value="admin">Admin Officer</option>
-                </select>
-                <div className="min-h-[18px] mt-1" />
-              </div>
+              {/* Role is fixed to citizen - removed dropdown to prevent admin registration */}
+              <input type="hidden" name="role" value={form.role} />
 
               {/* Password */}
               <Field
