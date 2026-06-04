@@ -132,13 +132,6 @@ const TrackComplaintPage = () => {
           <div className="flex items-center gap-2 sm:gap-4 text-xs sm:text-sm">
             {isAuthenticated ? (
               <>
-                {/* Back to Dashboard button */}
-                <button
-                  onClick={() => navigate(dashboardPath)}
-                  className="text-white/70 hover:text-white transition-colors flex items-center gap-1"
-                >
-                  ← Dashboard
-                </button>
                 {/* My Complaints — only for citizen role */}
                 {userRole === 'citizen' && (
                   <Link
@@ -177,16 +170,27 @@ const TrackComplaintPage = () => {
 
         <form onSubmit={handleSearch} className="gov-card gov-card-body mb-8 animate-fade-in delay-1">
           <label className="gov-label">Complaint Tracking ID</label>
-          <div className="flex gap-3 mt-1">
+          <div className="flex flex-col sm:flex-row gap-3 mt-1 items-stretch">
             <input
               type="text" value={query} onChange={(e) => setQuery(e.target.value)}
               placeholder="e.g. GRV-20260530-0001"
               className="gov-input font-mono text-sm flex-1"
               style={{ letterSpacing: '0.04em' }}
             />
-            <button type="submit" disabled={loading} className="btn-primary px-6 flex-shrink-0">
-              {loading ? <span className="spinner w-4 h-4" /> : 'Track'}
-            </button>
+            <div className="flex gap-3 items-center">
+              <button type="submit" disabled={loading} className="btn-primary px-6 py-2 flex-shrink-0">
+                {loading ? <span className="spinner w-4 h-4" /> : 'Track'}
+              </button>
+              {isAuthenticated && (
+                <button
+                  type="button"
+                  onClick={() => navigate(dashboardPath)}
+                  className="btn-secondary px-6 py-2 flex-shrink-0"
+                >
+                  Dashboard
+                </button>
+              )}
+            </div>
           </div>
           <p className="text-xs text-gray-400 mt-2">
             Format: GRV-YYYYMMDD-XXXX (e.g. GRV-20260530-0001)
@@ -276,47 +280,37 @@ const TrackComplaintPage = () => {
             {/* Timeline */}
             <div className="gov-card">
               <div className="gov-card-header">
-                <h3 className="font-bold text-navy-800">📍 Status Timeline</h3>
+                <h3 className="font-bold text-navy-800">Status Timeline</h3>
               </div>
               <div className="gov-card-body">
                 <StatusTimeline currentStatus={complaint.status} activityLog={complaint.activityLog} />
               </div>
             </div>
 
-            <p className="text-center text-sm text-gray-500">
-              {isAuthenticated ? (
-                <>
-                  <button onClick={() => navigate(dashboardPath)} className="text-navy-600 font-semibold hover:underline">← Go to Dashboard</button>
-                  {' '}to view all your complaints.
-                </>
-              ) : (
-                <>
-                  Need help?{' '}
-                  <Link to="/login" className="text-navy-600 font-semibold hover:underline">Sign in</Link>
-                  {' '}to view your full complaint details.
-                </>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-3 text-center sm:text-left">
+              <button
+                onClick={() => navigate(dashboardPath)}
+                className="btn-primary px-5 py-2 text-sm font-semibold"
+              >
+                Dashboard
+              </button>
+              <p className="text-sm text-gray-500 sm:mb-0">
+                {isAuthenticated ? 'View all your complaints from the dashboard.' : 'Sign in to view your full complaint details.'}
+              </p>
+              {!isAuthenticated && (
+                <Link to="/login" className="text-navy-600 font-semibold hover:underline text-sm">
+                  Sign in
+                </Link>
               )}
-            </p>
+            </div>
           </div>
         )}
 
         {/* Empty search hint */}
         {!complaint && !error && !loading && (
           <div className="text-center text-gray-400 py-8 animate-fade-in delay-2">
-            <div className="text-4xl mb-3">📭</div>
+            <div className="text-4xl mb-3"></div>
             <p className="text-sm">Enter your Tracking ID above to get started.</p>
-            {isAuthenticated ? (
-              <button
-                onClick={() => navigate(dashboardPath)}
-                className="text-navy-600 text-sm hover:underline mt-2 inline-block"
-              >
-                ← Back to Dashboard
-              </button>
-            ) : (
-              <Link to="/login" className="text-navy-600 text-sm hover:underline mt-2 inline-block">
-                Or sign in to view all your complaints →
-              </Link>
-            )}
           </div>
         )}
       </main>

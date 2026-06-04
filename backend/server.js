@@ -17,18 +17,37 @@ const startServer = async () => {
     // Connect to MongoDB
     await connectDB();
 
-    // Start Express server
-    const server = app.listen(PORT, () => {
-      console.log('');
-      console.log('🏛️  ========================================');
-      console.log('   Public Grievance Management System');
-      console.log('   ========================================');
-      console.log(`🚀 Server running in ${process.env.NODE_ENV} mode`);
-      console.log(`📡 API available at: http://localhost:${PORT}/api`);
-      console.log(`❤️  Health check: http://localhost:${PORT}/api/health`);
-      console.log('   ========================================');
-      console.log('');
-    });
+    const launchServer = (port, attempt = 1) => {
+      const server = app.listen(port, () => {
+        console.log('');
+        console.log('🏛️  ========================================');
+        console.log('   Public Grievance Management System');
+        console.log('   ========================================');
+        console.log(`🚀 Server running in ${process.env.NODE_ENV} mode`);
+        console.log(`📡 API available at: http://localhost:${port}/api`);
+        console.log(`❤️  Health check: http://localhost:${port}/api/health`);
+        console.log('   ========================================');
+        console.log('');
+      });
+
+      server.on('error', (error) => {
+        if (error.code === 'EADDRINUSE') {
+          if (attempt < 3) {
+            const fallbackPort = Number(port) + 1;
+            console.warn(`❌ Port ${port} is already in use. Trying fallback port ${fallbackPort}...`);
+            launchServer(fallbackPort, attempt + 1);
+            return;
+          }
+
+          console.error(`❌ Port ${port} is already in use. Stop the process using this port or set a different PORT in backend/.env.`);
+        } else {
+          console.error('❌ Server error:', error);
+        }
+        process.exit(1);
+      });
+    };
+
+    launchServer(PORT);
 
     // ─── Graceful Shutdown ─────────────────────────────────────────────────
 

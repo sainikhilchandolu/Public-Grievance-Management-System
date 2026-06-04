@@ -82,12 +82,24 @@ const RegisterPage = () => {
 
   const validate = () => {
     const e = {};
-    if (!form.name.trim())            e.name = 'Full name is required';
-    if (!form.email)                  e.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Enter a valid email';
-    if (!form.password)               e.password = 'Password is required';
-    else if (form.password.length < 6) e.password = 'Minimum 6 characters';
-    if (form.password !== form.confirmPassword) e.confirmPassword = 'Passwords do not match';
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/;
+
+    if (!form.name.trim()) {
+      e.name = 'Full name is required';
+    }
+    if (!form.email) {
+      e.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(form.email)) {
+      e.email = 'Enter a valid email';
+    }
+    if (!form.password) {
+      e.password = 'Password is required';
+    } else if (!passwordPattern.test(form.password)) {
+      e.password = 'Password must be at least 8 characters and include uppercase, lowercase, number, and symbol';
+    }
+    if (form.password !== form.confirmPassword) {
+      e.confirmPassword = 'Passwords do not match';
+    }
     return e;
   };
 

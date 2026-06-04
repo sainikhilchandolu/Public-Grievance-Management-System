@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 // Auth Pages
 import LoginPage from '../pages/auth/LoginPage';
 import RegisterPage from '../pages/auth/RegisterPage';
+import ForgotPasswordPage from '../pages/auth/ForgotPasswordPage';
 import TrackComplaintPage from '../pages/public/TrackComplaintPage';
 import LandingPage from '../pages/public/LandingPage';
 
@@ -106,6 +107,7 @@ const AppRouter = () => {
 
       {/* Public Routes */}
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/track" element={<TrackComplaintPage />} />
       <Route path="/track/:trackingId" element={<TrackComplaintPage />} />

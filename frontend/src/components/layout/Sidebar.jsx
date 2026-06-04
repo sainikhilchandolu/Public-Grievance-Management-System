@@ -35,14 +35,13 @@ const Sidebar = ({ isOpen, onClose }) => {
 
       {/* Sidebar panel */}
       <aside
-        className="gov-sidebar fixed top-0 left-0 h-full w-64 z-40 flex flex-col transition-transform duration-300 bg-[#0B2E59] border-r border-[#163E72]
-          ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0"
+        className={`gov-sidebar fixed top-0 left-0 h-full w-64 z-40 flex flex-col transition-transform duration-300 bg-[#0B2E59] border-r border-[#163E72] ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}
       >
         {/* Logo / Portal Name */}
         <div className="px-6 py-5 border-b border-white/10 flex items-center gap-3">
           <div>
-            <p className="text-white font-bold text-sm leading-tight tracking-tight">CPGRAMS Redesign</p>
-            <p className="text-blue-200 text-[10px] font-semibold uppercase tracking-wider">Government of India</p>
+            <p className="text-white font-bold text-sm leading-tight tracking-tight">PGMS of India</p>
+            <p className="text-blue-200 text-[10px] font-semibold uppercase tracking-wider">Public Grievance Management System</p>
           </div>
         </div>
 
@@ -64,6 +63,14 @@ const Sidebar = ({ isOpen, onClose }) => {
             </NavLink>
           ))}
         </nav>
+
+        {/* Sidebar info summary */}
+        <div className="mx-4 my-3 rounded-3xl border border-white/10 bg-white/5 p-4 text-white/90 shadow-sm">
+          <p className="text-sm font-bold tracking-wide mb-2">Public Grievance Management</p>
+          <p className="text-[11px] leading-relaxed text-white/70">
+            Government service delivery that is secure, transparent and citizen-centric.
+          </p>
+        </div>
 
         {/* Bottom actions */}
         <div className="px-4 py-4 border-t border-white/10">

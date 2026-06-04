@@ -76,7 +76,9 @@ const Navbar = ({ pageTitle, onMenuToggle }) => {
               </div>
               <div className="hidden md:block text-left pr-1">
                 <p className="text-xs font-bold text-slate-800 leading-none">{user?.name}</p>
-                <p className="text-[10px] font-bold text-[#163E72] uppercase tracking-wide mt-0.5">{user?.role} Officer</p>
+                <p className="text-[10px] font-bold text-[#163E72] uppercase tracking-wide mt-0.5">
+                  {user?.role === 'admin' ? 'Admin Officer' : user?.role === 'officer' ? 'Officer' : 'Citizen'}
+                </p>
               </div>
             </button>
 

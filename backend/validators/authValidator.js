@@ -1,4 +1,5 @@
 const { validationResult, check } = require('express-validator');
+const User = require('../models/User');
 
 /**
  * Validation Result Handler
@@ -36,15 +37,28 @@ const validateRegister = [
     .withMessage('Email is required')
     .isEmail()
     .withMessage('Please provide a valid email address')
-    .normalizeEmail(),
+    .normalizeEmail()
+    .custom(async (value) => {
+      const existingUser = await User.findOne({ email: value.toLowerCase() });
+      if (existingUser) {
+        throw new Error('This email is already registered');
+      }
+      return true;
+    }),
 
   check('password')
     .notEmpty()
     .withMessage('Password is required')
-    .isLength({ min: 6 })
-    .withMessage('Password must be at least 6 characters')
+    .isLength({ min: 8 })
+    .withMessage('Password must be at least 8 characters')
+    .matches(/[A-Z]/)
+    .withMessage('Password must contain at least one uppercase letter')
+    .matches(/[a-z]/)
+    .withMessage('Password must contain at least one lowercase letter')
     .matches(/\d/)
-    .withMessage('Password must contain at least one number'),
+    .withMessage('Password must contain at least one number')
+    .matches(/[!@#$%^&*(),.?":{}|<>\[\]\\/~`_+=;'-]/)
+    .withMessage('Password must contain at least one special character'),
 
   check('confirmPassword')
     .notEmpty()

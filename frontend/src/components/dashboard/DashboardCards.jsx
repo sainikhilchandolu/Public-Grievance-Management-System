@@ -2,6 +2,8 @@
  * DashboardCards Component
  * Displays summary stat cards for the admin dashboard with a formal government portal style.
  */
+import { FiClipboard, FiClock, FiPlay, FiCheckCircle, FiXCircle, FiUsers } from 'react-icons/fi';
+
 const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
   const cards = [
     {
@@ -10,6 +12,7 @@ const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
       value: stats?.total ?? 0,
       colorTheme: 'blue',
       desc: 'All time records',
+      icon: FiClipboard,
     },
     {
       id: 'Pending',
@@ -17,6 +20,7 @@ const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
       value: (stats?.byStatus?.Submitted ?? 0) + (stats?.byStatus?.Pending ?? 0),
       colorTheme: 'yellow',
       desc: 'Awaiting review',
+      icon: FiClock,
     },
     {
       id: 'In Progress',
@@ -27,6 +31,7 @@ const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
         (stats?.byStatus?.Assigned ?? 0),
       colorTheme: 'purple',
       desc: 'Being worked on',
+      icon: FiPlay,
     },
     {
       id: 'Resolved',
@@ -34,6 +39,7 @@ const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
       value: stats?.byStatus?.Resolved ?? 0,
       colorTheme: 'green',
       desc: 'Successfully closed',
+      icon: FiCheckCircle,
     },
     {
       id: 'Rejected',
@@ -41,6 +47,7 @@ const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
       value: stats?.byStatus?.Rejected ?? 0,
       colorTheme: 'red',
       desc: 'Not accepted',
+      icon: FiXCircle,
     },
     {
       id: 'Citizens',
@@ -48,6 +55,7 @@ const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
       value: stats?.totalUsers ?? 0,
       colorTheme: 'indigo',
       desc: 'Registered users',
+      icon: FiUsers,
       isNonFilterable: true,
     },
   ];
@@ -81,12 +89,12 @@ const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
 
   const getIconClasses = (theme, isActive) => {
     const themes = {
-      blue: isActive ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'bg-blue-100 text-blue-600 group-hover:bg-blue-200',
-      yellow: isActive ? 'bg-amber-500 text-white shadow-lg shadow-amber-200' : 'bg-amber-100 text-amber-600 group-hover:bg-amber-200',
-      purple: isActive ? 'bg-purple-600 text-white shadow-lg shadow-purple-200' : 'bg-purple-100 text-purple-600 group-hover:bg-purple-200',
-      green: isActive ? 'bg-green-500 text-white shadow-lg shadow-green-200' : 'bg-green-100 text-green-600 group-hover:bg-green-200',
-      red: isActive ? 'bg-red-500 text-white shadow-lg shadow-red-200' : 'bg-red-100 text-red-600 group-hover:bg-red-200',
-      indigo: 'bg-indigo-100 text-indigo-600',
+      blue: isActive ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-200' : 'bg-blue-100 text-blue-600',
+      yellow: isActive ? 'bg-amber-50 text-amber-600 ring-1 ring-amber-200' : 'bg-amber-100 text-amber-600',
+      purple: isActive ? 'bg-purple-50 text-purple-600 ring-1 ring-purple-200' : 'bg-purple-100 text-purple-600',
+      green: isActive ? 'bg-green-50 text-emerald-600 ring-1 ring-green-200' : 'bg-green-100 text-emerald-600',
+      red: isActive ? 'bg-red-50 text-red-600 ring-1 ring-red-200' : 'bg-red-100 text-red-600',
+      indigo: isActive ? 'bg-indigo-50 text-indigo-600 ring-1 ring-indigo-200' : 'bg-indigo-100 text-indigo-600',
     };
     return themes[theme] || '';
   };
@@ -101,17 +109,22 @@ const DashboardCards = ({ stats, loading, activeFilter, onCardClick }) => {
             key={card.label}
             onClick={() => isClickable && onCardClick(card.id)}
             className={`
-              relative bg-white rounded-xl border border-slate-200 p-5
+              relative bg-white rounded-2xl border border-slate-200 p-5
               transition-all duration-300 group
-              ${isClickable ? 'cursor-pointer hover:shadow-lg hover:-translate-y-1' : ''}
+              ${isClickable ? 'cursor-pointer hover:shadow-lg hover:-translate-y-0.5' : ''}
               ${getThemeClasses(card.colorTheme, isActive)}
             `}
           >
-            <div className="mb-4">
-              <p className="text-4xl font-black text-gray-800">{card.value}</p>
+              <div className="mb-4">
+              <p className="text-[10px] uppercase tracking-[0.35em] text-slate-400">{card.label}</p>
             </div>
-            <p className="text-sm font-bold text-[#0B2E59] leading-tight mb-1">{card.label}</p>
-            <p className="text-xs text-slate-500">{card.desc}</p>
+            <div className="mb-3 flex items-center justify-between gap-3">
+              <p className="text-3xl font-black text-slate-900">{card.value}</p>
+              <div className={`inline-flex items-center justify-center w-11 h-11 rounded-full shadow-sm border border-slate-100 ${getIconClasses(card.colorTheme, isActive)}`}>
+                <card.icon className="w-5 h-5" />
+              </div>
+            </div>
+            <p className="text-sm text-slate-500 leading-tight">{card.desc}</p>
           </div>
         );
       })}
