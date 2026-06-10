@@ -71,7 +71,7 @@ const complaintSchema = new mongoose.Schema(
     // === STATUS WORKFLOW ===
     status: {
       type: String,
-      enum: ['Submitted', 'Under Review', 'Assigned', 'In Progress', 'Resolved', 'Closed', 'Rejected'],
+      enum: ['Submitted', 'Pending', 'Under Review', 'Assigned', 'In Progress', 'Resolved', 'Closed', 'Rejected'],
       default: 'Submitted',
     },
     resolvedAt: {
@@ -95,6 +95,7 @@ const complaintSchema = new mongoose.Schema(
     // === NOTES & ASSIGNMENT ===
     remarks: { type: String, default: '', trim: true },
     assignedTo: { type: String, default: '' },      // Officer name
+    updatedByAdmin: { type: String, default: '', trim: true }, // Admin name who last updated the complaint
     assignedDept: { type: String, default: '' },    // Officer department
 
     // === REFERENCES ===

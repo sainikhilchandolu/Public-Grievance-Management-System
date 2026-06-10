@@ -31,23 +31,11 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['citizen', 'officer', 'admin'],
+      enum: ['citizen'],
       default: 'citizen',
     },
-    department: {
-      type: String,
-      default: '',
-      trim: true,
-    },
-    phone: {
-      type: String,
-      default: '',
-      trim: true,
-    },
-    avatar: {
-      type: String,
-      default: '',
-    },
+   
+    
     isActive: {
       type: Boolean,
       default: true,
@@ -70,3 +58,4 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 };
 
 module.exports = mongoose.model('User', userSchema);
+ 

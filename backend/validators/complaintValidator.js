@@ -72,7 +72,13 @@ const validateComplaint = [
     .optional()
     .isIn(['Low', 'Medium', 'High', 'Urgent'])
     .withMessage('Priority must be Low, Medium, High, or Urgent'),
-
+  // Ensure at least one image is uploaded (file input handled by upload middleware)
+  check('images').custom((value, { req }) => {
+    if (!req.files || !Array.isArray(req.files) || req.files.length === 0) {
+      throw new Error('Please upload at least one supporting image');
+    }
+    return true;
+  }),
   handleValidationErrors,
 ];
 

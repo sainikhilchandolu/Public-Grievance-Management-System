@@ -13,6 +13,7 @@ const StatusUpdateModal = ({ complaint, isOpen, onClose, onUpdate }) => {
   const [status, setStatus] = useState(complaint?.status || 'Submitted');
   const [remarks, setRemarks] = useState(complaint?.remarks || '');
   const [assignedTo, setAssignedTo] = useState(complaint?.assignedTo || '');
+  const [assignedDept, setAssignedDept] = useState(complaint?.assignedDept || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -30,7 +31,7 @@ const StatusUpdateModal = ({ complaint, isOpen, onClose, onUpdate }) => {
 
     setLoading(true);
     try {
-      await updateStatus(complaint._id, { status, remarks, assignedTo });
+      await updateStatus(complaint._id, { status, remarks, assignedTo, assignedDept });
       toast.success(`Status updated to "${status}" successfully!`);
       onUpdate();
       onClose();
@@ -105,7 +106,7 @@ const StatusUpdateModal = ({ complaint, isOpen, onClose, onUpdate }) => {
           {/* Assigned To */}
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Assign To Officer <span className="text-gray-400 font-normal">(Optional)</span>
+              Assign To Officer
             </label>
             <input
               type="text"
@@ -115,6 +116,20 @@ const StatusUpdateModal = ({ complaint, isOpen, onClose, onUpdate }) => {
               className="input-field"
             />
           </div>
+
+            {/* Assigned Department */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Assign Department
+              </label>
+              <input
+                type="text"
+                value={assignedDept}
+                onChange={(e) => setAssignedDept(e.target.value)}
+                placeholder="e.g. Public Works Department"
+                className="input-field"
+              />
+            </div>
 
           {/* Remarks */}
           <div>

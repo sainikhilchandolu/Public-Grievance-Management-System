@@ -24,6 +24,7 @@ const NewComplaint = () => {
     else if (form.description.trim().length < 20) e.description = 'Minimum 20 characters';
     if (!form.category) e.category = 'Please select a category';
     if (!form.location.trim()) e.location = 'Location is required';
+    if (!images || images.length === 0) e.images = 'Please upload at least one supporting image';
     return e;
   };
 
@@ -128,9 +129,10 @@ const NewComplaint = () => {
 
           {/* Image Upload */}
           <div className="gov-card gov-card-body">
-            <label className="gov-label">Supporting Images (Optional)</label>
+            <label className="gov-label">Supporting Images <span className="text-red-500">*</span></label>
             <p className="text-xs text-gray-400 mb-3">Upload up to 3 photos as evidence (max 5MB each)</p>
             <ImageUpload onChange={setImages} maxFiles={3} />
+            {errors.images && <p className="text-red-500 text-xs mt-2">{errors.images}</p>}
           </div>
 
           {/* Submit */}

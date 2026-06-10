@@ -232,7 +232,7 @@ const updateComplaint = asyncHandler(async (req, res) => {
 
   complaint = await Complaint.findByIdAndUpdate(
     req.params.id,
-    { title, description, category, department: category, priority, location, images, activityLog: complaint.activityLog },
+    { title, description, category, department: category, priority, location, images, activityLog: complaint.activityLog, updatedByAdmin: req.user.role === 'admin' ? req.user.name : complaint.updatedByAdmin },
     { new: true, runValidators: true }
   );
 
@@ -300,6 +300,9 @@ const updateStatus = asyncHandler(async (req, res) => {
   if (remarks) complaint.remarks = remarks;
   if (assignedTo) complaint.assignedTo = assignedTo;
   if (assignedDept) complaint.assignedDept = assignedDept;
+  if (req.user.role === 'admin') {
+    complaint.updatedByAdmin = req.user.name;
+  }
 
   // Set resolvedAt when closing
   if (['Resolved', 'Closed'].includes(status) && !complaint.resolvedAt) {

@@ -185,7 +185,7 @@ const TrackComplaintPage = () => {
                 <button
                   type="button"
                   onClick={() => navigate(dashboardPath)}
-                  className="btn-secondary px-6 py-2 flex-shrink-0"
+                  className="btn-primary px-6 py-2 flex-shrink-0"
                 >
                   Dashboard
                 </button>
