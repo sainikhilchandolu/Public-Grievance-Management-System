@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-const api = axios.create({
+const api = axios.create({  //reusable Axios object
   baseURL: 'http://localhost:5000/api',
   withCredentials: true,
 });
 
 // Attach JWT token from localStorage to every request
-api.interceptors.request.use((config) => {
+api.interceptors.request.use((config) => { //first fn after bd
   const token = localStorage.getItem('token');
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (token) config.headers.Authorization = `Bearer ${token}`; // bd protect mw
   return config;
 });
 
