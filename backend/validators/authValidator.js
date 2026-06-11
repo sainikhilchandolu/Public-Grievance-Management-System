@@ -72,8 +72,8 @@ const validateRegister = [
 
   check('role')
     .optional()
-    .isIn(['citizen', 'admin'])
-    .withMessage('Role must be either citizen or admin'),
+    .isIn(['citizen'])
+    .withMessage('Role must be either citizen'),
 
   handleValidationErrors,
 ];

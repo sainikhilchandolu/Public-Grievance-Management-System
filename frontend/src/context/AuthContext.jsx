@@ -12,9 +12,9 @@ const initialState = {
 // ─── Reducer ────────────────────────────────────────────────────────────────
 const authReducer = (state, action) => {
   switch (action.type) {
-    case 'LOGIN':
+    case 'LOGIN': //Runs after successful login
       return {
-        ...state,
+        ...state, //Keeps existing values.
         user: action.payload.user,
         token: action.payload.token,
         isAuthenticated: true,
@@ -30,7 +30,7 @@ const authReducer = (state, action) => {
       };
     case 'SET_LOADING':
       return { ...state, loading: action.payload };
-    case 'AUTH_ERROR':
+    case 'AUTH_ERROR':  //When token expired
       return { ...state, loading: false, isAuthenticated: false };
     default:
       return state;
@@ -38,7 +38,7 @@ const authReducer = (state, action) => {
 };
 
 // ─── Context ────────────────────────────────────────────────────────────────
-// eslint-disable-next-line react-refresh/only-export-components
+// eslint-disable-next-line react-refresh/only-export-components global auth
 export const AuthContext = createContext(null);
 
 // ─── Provider ───────────────────────────────────────────────────────────────

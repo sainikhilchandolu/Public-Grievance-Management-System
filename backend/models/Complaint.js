@@ -114,7 +114,7 @@ const complaintSchema = new mongoose.Schema(
 // Full-text search index
 complaintSchema.index({ title: 'text', description: 'text', location: 'text', trackingId: 'text' });
 complaintSchema.index({ status: 1, category: 1, priority: 1 });
-complaintSchema.index({ createdBy: 1, createdAt: -1 });
+complaintSchema.index({ createdBy: 1, createdAt: -1 }); // group by user id
 
 // Auto-set resolvedAt when status changes to Resolved or Closed
 complaintSchema.pre('save', function (next) {

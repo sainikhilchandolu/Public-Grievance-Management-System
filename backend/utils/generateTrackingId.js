@@ -21,10 +21,10 @@ const generateTrackingId = async () => {
 
   const countToday = await Complaint.countDocuments({
     createdAt: { $gte: startOfDay, $lte: endOfDay },
-  });
+  });  //complaints toady
 
-  let sequenceNum = countToday + 1;
-  let trackingId = `GRV-${dateStr}-${String(sequenceNum).padStart(4, '0')}`;
+  let sequenceNum = countToday + 1; //create sequence number
+  let trackingId = `GRV-${dateStr}-${String(sequenceNum).padStart(4, '0')}`; //
 
   // Loop to guarantee absolute uniqueness and prevent duplicate key errors
   let exists = await Complaint.exists({ trackingId });
