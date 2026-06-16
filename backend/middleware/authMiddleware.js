@@ -2,20 +2,31 @@ const jwt = require('jsonwebtoken');
 const asyncHandler = require('../utils/asyncHandler');
 const User = require('../models/User');
 
+const parseCookies = (cookieHeader = '') =>
+  cookieHeader.split(';').reduce((cookies, cookie) => {
+    const [name, ...rest] = cookie.split('=');
+    if (!name || rest.length === 0) return cookies;
+    cookies[name.trim()] = decodeURIComponent(rest.join('=').trim());
+    return cookies;
+  }, {});
+
 /**
  * Protect Middleware
- * Verifies JWT token from Authorization header
+ * Verifies JWT token from Authorization header or HttpOnly cookie
  * Attaches authenticated user object to req.user
  */
 const protect = asyncHandler(async (req, res, next) => {
   let token;
 
-  // Check for Bearer token in Authorization header
+  // Prefer Bearer token if provided
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.headers.cookie) {
+    const cookies = parseCookies(req.headers.cookie);
+    token = cookies.token;
   }
 
   // If no token found, deny access
