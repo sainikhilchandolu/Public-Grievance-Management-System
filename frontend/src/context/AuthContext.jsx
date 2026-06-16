@@ -1,10 +1,9 @@
-import { createContext, useContext, useReducer, useEffect } from 'react';
+import { createContext, useContext, useReducer, useEffect, useRef } from 'react';
 import * as authService from '../services/authService';
 
 // ─── Initial State ──────────────────────────────────────────────────────────
 const initialState = {
   user: null,
-  token: localStorage.getItem('token') || null,
   isAuthenticated: false,
   loading: true,
 };
@@ -16,7 +15,6 @@ const authReducer = (state, action) => {
       return {
         ...state, //Keeps existing values.
         user: action.payload.user,
-        token: action.payload.token,
         isAuthenticated: true,
         loading: false,
       };
@@ -24,7 +22,6 @@ const authReducer = (state, action) => {
       return {
         ...state,
         user: null,
-        token: null,
         isAuthenticated: false,
         loading: false,
       };
@@ -44,45 +41,32 @@ export const AuthContext = createContext(null);
 // ─── Provider ───────────────────────────────────────────────────────────────
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
+  const didBootstrapRef = useRef(false);
 
-  // On mount, validate stored token by fetching current user
   useEffect(() => {
-    const validateToken = async () => {
-      const token = localStorage.getItem('token');
-      const storedUser = localStorage.getItem('user');
+    if (didBootstrapRef.current) return;
+    didBootstrapRef.current = true;
 
-      if (token && storedUser) {
-        try {
-          const res = await authService.getMe();
-          dispatch({
-            type: 'LOGIN',
-            payload: { user: res.data.user, token },
-          });
-        } catch {
-          // Token is invalid or expired — clear storage
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          dispatch({ type: 'AUTH_ERROR' });
-        }
-      } else {
-        dispatch({ type: 'SET_LOADING', payload: false });
+    const bootstrapAuth = async () => {
+      dispatch({ type: 'SET_LOADING', payload: true });
+      try {
+        const res = await authService.getMe();
+        dispatch({ type: 'LOGIN', payload: { user: res.data.user } });
+      } catch {
+        dispatch({ type: 'AUTH_ERROR' });
       }
     };
 
-    validateToken();
+    bootstrapAuth();
   }, []);
 
   // ─── Login ────────────────────────────────────────────────────────────────
   const login = async (credentials) => {
     const res = await authService.login(credentials);
-    const { token, user } = res.data;
+    const { user } = res.data;
 
-    // Persist to localStorage
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
-
-    dispatch({ type: 'LOGIN', payload: { user, token } });
-    return { user, token };
+    dispatch({ type: 'LOGIN', payload: { user } });
+    return { user };
   };
 
   // ─── Register ─────────────────────────────────────────────────────────────
@@ -92,10 +76,21 @@ export const AuthProvider = ({ children }) => {
   };
 
   // ─── Logout ───────────────────────────────────────────────────────────────
-  const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    dispatch({ type: 'LOGOUT' });
+  const logout = async () => {
+    try {
+      await authService.logout();
+    } finally {
+      // Preserve theme preference but clear any other lingering localStorage data
+      try {
+        const theme = localStorage.getItem('theme');
+        localStorage.clear();
+        if (theme) localStorage.setItem('theme', theme);
+      } catch (e) {
+        // localStorage may be unavailable in some environments; ignore
+      }
+
+      dispatch({ type: 'LOGOUT' });
+    }
   };
 
   return (

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link, useParams, useSearchParams } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import { trackComplaint } from '../../services/complaintService';
 import StatusBadge from '../../components/complaints/StatusBadge';
 import StatusTimeline from '../../components/complaints/StatusTimeline';
@@ -46,15 +47,8 @@ const TrackComplaintPage = () => {
   const [loading, setLoading]   = useState(false);
   const [error, setError]       = useState('');
 
-  // Read auth state directly from localStorage so this page works
-  // without depending on an async context load completing first.
-  // This also ensures state persists correctly after page refresh.
-  const token = localStorage.getItem('token');
-  const storedUser = (() => {
-    try { return JSON.parse(localStorage.getItem('user')); } catch { return null; }
-  })();
-  const isAuthenticated = !!(token && storedUser);
-  const userRole = storedUser?.role || null;
+    const { user, isAuthenticated, logout } = useAuth();
+  const userRole = user?.role || null;
 
   // Derive role-based dashboard path
   const dashboardPath =
@@ -108,8 +102,7 @@ const TrackComplaintPage = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    logout();
     navigate('/login');
   };
 

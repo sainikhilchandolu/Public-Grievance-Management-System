@@ -29,12 +29,22 @@ const register = asyncHandler(async (req, res) => {
 
   // Generate JWT token
   const token = generateToken(user._id);
+  const isProduction = process.env.NODE_ENV === 'production';
 
-  // Send response without password
+  const cookieOptions = {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
+    path: '/',
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  };
+
+  res.cookie('token', token, cookieOptions);
+
+  // Send response without exposing the token
   res.status(201).json({
     success: true,
     message: 'Account created successfully! Welcome to GrievanceMS.',
-    token,
     user: {
       _id: user._id,
       name: user.name,
@@ -82,11 +92,21 @@ const login = asyncHandler(async (req, res) => {
 
   // Generate JWT token
   const token = generateToken(user._id);
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  const cookieOptions = {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
+    path: '/',
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  };
+
+  res.cookie('token', token, cookieOptions);
 
   res.status(200).json({
     success: true,
     message: `Welcome back, ${user.name}!`,
-    token,
     user: {
       _id: user._id,
       name: user.name,
@@ -94,6 +114,27 @@ const login = asyncHandler(async (req, res) => {
       role: user.role,
       createdAt: user.createdAt,
     },
+  });
+});
+
+/**
+ * @desc    Logout the user by clearing the auth cookie
+ * @route   POST /api/auth/logout
+ * @access  Public
+ */
+const logout = asyncHandler(async (req, res) => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  res.cookie('token', '', {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: 'none',
+    path: '/',
+    expires: new Date(0),
+  });
+
+  res.status(200).json({
+    success: true,
+    message: 'Logged out successfully.',
   });
 });
 
@@ -125,4 +166,4 @@ const getMe = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { register, login, getMe };
+module.exports = { register, login, logout, getMe };
